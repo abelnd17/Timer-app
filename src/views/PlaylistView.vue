@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import AdjustableTime from '../components/AdjustableTime.vue'
 import { addMinute, addSecond, minusMinute, minusSecond } from '../clock.js'
+import draggable from 'vuedraggable';
 const openDialog = ref(false)
 const exercises = ref([])
 const message = ref('')
@@ -47,6 +48,8 @@ function updateTime(command, type) {
       break
   }
 }
+
+
 
 function disableBreak() {
   if (noBreak.value) {
@@ -143,7 +146,6 @@ function runTimer() {
     <div v-if="openDialog" class="mask">
       <div class="modal" style="opacity: 100%">
         <h2>Add Exercise</h2>
-        <p>Message is: {{ message }}</p>
         <input v-model="message" placeholder="Exercise name" def />
         <AdjustableTime
           :disable-hours="true"
@@ -162,9 +164,9 @@ function runTimer() {
           ></AdjustableTime>
         </div>
         <div class="set-wrap">
-          <button id="resetbutton" @click="decreaseSets">Minus</button>
+          <button  @click="decreaseSets">Minus</button>
           <div>{{ sets }}</div>
-          <button id="resetbutton" @click="sets++">Plus</button>
+          <button  @click="sets++">Plus</button>
         </div>
         <button @click="addExercise" :disabled="exerciseMinutes == 0 && exerciseSeconds == 0">
           Add Exercise
@@ -176,10 +178,13 @@ function runTimer() {
       <p>{{ currentInterval }}: {{ exerciseMinutes }}:{{ exerciseSeconds }}</p>
     </div>
   </Teleport>
-  <button id="resetbutton" @click="openDialog = true">Add Exercise</button>
-  <button id="resetbutton" @click="startWorkout" :disabled="exercises.length == 0">Start</button>
-  <li v-for="(lapTime, index) in exercises" :key="lapTime.index">
-    {{ lapTime.name == 'Exercise' ? lapTime.name + ' ' + (index + 1) : lapTime.name }}
+  <button  @click="openDialog = true">Add Exercise</button>
+  <button  @click="startWorkout" :disabled="exercises.length == 0">Start</button>
+
+  <draggable v-model="exercises" tag="ul" item-key="index">
+    <template #item="{ element: lapTime }" >
+      <li class="drag-el">
+    {{ lapTime.name == 'Exercise' ? lapTime.name + ' ' + (exercises.indexOf(lapTime) + 1) : lapTime.name }}
     {{ lapTime.exMins < 10 ? '0' + lapTime.exMins : lapTime.exMins }}:{{
       lapTime.exSecs < 10 ? '0' + lapTime.exSecs : lapTime.exSecs
     }}
@@ -193,6 +198,8 @@ function runTimer() {
     }}
     <button @click="deleteExercise(index)">Delete</button>
   </li>
+    </template>
+  </draggable>
 </template>
 
 <style scoped>
@@ -218,5 +225,11 @@ function runTimer() {
   z-index: 995;
   position: fixed;
   background: rgba(0, 0, 0, 0.3);
+}
+.drag-el {
+  color: hsla(160, 100%, 37%, 1);
+  background-color: #fff;
+  margin-bottom: 10px;
+  padding: 5px;
 }
 </style>

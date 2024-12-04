@@ -9,10 +9,11 @@ function buttonClick(command) {
 
 <template>
   <div class="timer-wrap" v-if="!timerStarted">
-    <button v-if="!disableHours" id="resetbutton" @click="buttonClick('plusHour')">hour+</button>
-    <button id="resetbutton" @click="buttonClick('plusMinute')">minute+</button>
-    <button id="resetbutton" @click="buttonClick('plusSecond')">second+</button>
+    <button v-if="!disableHours"  @click="buttonClick('plusHour')">hour+</button>
+    <button  @click="buttonClick('plusMinute')">minute+</button>
+    <button  @click="buttonClick('plusSecond')">second+</button>
   </div>
+
   <div class="number">
     <div v-if="!disableHours">
       {{ hrs < 10 ? '0' + hrs + ':' : hrs + ':' }}
@@ -20,9 +21,9 @@ function buttonClick(command) {
     {{ mins < 10 ? '0' + mins : mins }}:{{ sec < 10 ? '0' + sec : sec }}
   </div>
   <div class="timer-wrap" v-if="!timerStarted">
-    <button v-if="!disableHours" id="resetbutton" @click="buttonClick('minusHour')">hour-</button>
-    <button id="resetbutton" @click="buttonClick('minusMinute')">minute-</button>
-    <button id="resetbutton" @click="buttonClick('minusSecond')">second-</button>
+    <button v-if="!disableHours"  @click="buttonClick('minusHour')">hour-</button>
+    <button  @click="buttonClick('minusMinute')">minute-</button>
+    <button  @click="buttonClick('minusSecond')">second-</button>
   </div>
 </template>
 
@@ -34,4 +35,5 @@ function buttonClick(command) {
   text-align: center;
   display: flex;
 }
+
 </style>

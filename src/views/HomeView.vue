@@ -86,8 +86,8 @@ function resetTimer() {
 <template>
   <div class="wrapper">
     <div id="number">00:00:00:00</div>
-    <button v-if="firstStart" id="resetbutton" disabled>{{ buttonName }}</button>
-    <button v-else id="resetbutton" class="resetbutton" @click="otherButtonAction">
+    <button v-if="firstStart"  disabled>{{ buttonName }}</button>
+    <button v-else  class="resetbutton" @click="otherButtonAction">
       {{ buttonName }}
     </button>
     <button @click="toggleTimer()">{{ isRunning ? 'Pause' : 'Start' }}</button>

@@ -95,9 +95,9 @@ function pauseTimer() {
     ></AdjustableTime>
   </div>
   <div>
-    <button id="resetbutton" @click="resetTimer" :disabled="!timerStarted">Reset</button>
+    <button  @click="resetTimer" :disabled="!timerStarted">Reset</button>
     <button
-      id="resetbutton"
+
       @click="toggleTimer"
       :disabled="hours == 0 && minutes == 0 && seconds == 0"
     >
